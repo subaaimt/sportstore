@@ -1,7 +1,16 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
+angular.module("sportsStoreAdmin")
+        .constant("authUrl", "http://localhost:2403/users/login")
+        .controller("authCtrl", function($scope, $http, $location, authUrl) {
+            $scope.authenticate = function(user, pass) {
+                $http.post(authUrl, {
+                    username: user,
+                    password: pass
+                }, {
+                    withCredentials: true
+                }).success(function(data) {
+                    $location.path("/main");
+                }).error(function(error) {
+                    $scope.authenticationError = error;
+                });
+            }
+        });
